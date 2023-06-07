@@ -1,4 +1,4 @@
-Insurance ML project withn MLops
+Insurance ML project with MLops
 
                                                Problem statement
 
