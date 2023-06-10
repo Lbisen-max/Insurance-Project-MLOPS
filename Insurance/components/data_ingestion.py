@@ -9,6 +9,7 @@ from Insurance import utils
 from Insurance.logger import logging
 from sklearn.model_selection import train_test_split
 
+
 class DataIngestion: # data devided into train,test and validation
     def __init__(self,data_ingestion_config:config_entity.DataIngestionConfig):
 
@@ -24,12 +25,12 @@ class DataIngestion: # data devided into train,test and validation
 
             df:pd.DataFrame = utils.get_collection_as_dataframe(
                 database_name=self.data_ingestion_config.database_name,
-                collection_name=self.data_ingestion_config.collection_name)
+                collection_name=self.data_ingestion_config.collection_name)                                                                                                                                                                                                         
 
             logging.info(f"save data in future store")
 
             # replace NA with Nan
-            df.replace(to_replace="na",value=np.nan,inplace=True)
+            df.replace(to_replace="na",value=np.NAN,inplace=True)
 
 
             # save data in feature store 
@@ -58,6 +59,10 @@ class DataIngestion: # data devided into train,test and validation
                 train_file_path=self.data_ingestion_config.train_file_path,
                 test_file_path=self.data_ingestion_config.test_file_path
             )
+
+            logging.info(f"Data ingestion artifact: {data_ingestion_artifact}")
+
+            return data_ingestion_artifact
 
         except Exception as e:
             raise InsuranceException(e,sys)

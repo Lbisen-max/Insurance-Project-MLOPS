@@ -31,11 +31,21 @@ class DataIngestionConfig:
     
 # convert data into dict 
 
-    def to_dict(self)->dict:
+    def to_dict(self,)->dict:
         try:
             return self.__dict__
         except Exception as e:
             raise InsuranceException(e,sys)
 
-# class DataValidation:
-#     pass
+class DataValidationConfig:
+
+    def __init__(self,training_pipeline_config:TraningPipelineConfig):
+        self.data_validation_dir = os.path.join(training_pipeline_config.artifact_dir,"data_validation")
+        self.report_file_path=os.path.join(self.data_validation_dir,"report.yaml") # it will create the report(ymal)
+        self.missing_threshold:float = 0.2
+        self.base_file_path=os.path.join("insurance.csv")
+
+
+    
+        
+    
