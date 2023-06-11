@@ -30,7 +30,7 @@ class DataValidation:
     def drop_missing_value_columns(self,df:pd.DataFrame,report_key_name:str)->Optional[pd.DataFrame]:
         try:
             threshold = self.data_validation_config.missing_threshold
-            null_report =df.isna().sum() / df.shape[0]
+            null_report =df.isna().sum()/df.shape[0]
             logging.info(f"selecting column name which contains null above to {threshold}")
 
             drop_columns_names = null_report[null_report>threshold].index
@@ -138,11 +138,13 @@ class DataValidation:
 
             # Write your report
             logging.info("Write reprt in yaml file")
-            utils.write_yaml_file(file_path=self.data_validation_config.report_file_path,data=self.validation_error)
+            utils.write_yaml_file(file_path=self.data_validation_config.report_file_path,
+            data=self.validation_error)
 
 
             data_validation_artifact = artifact_entity.DataValidationArtifact(report_file_path=self.data_validation_config.report_file_path,)
             logging.info(f"Data validation artifact: {data_validation_artifact}")
+            
             return data_validation_artifact
 
         except Exception as e:
